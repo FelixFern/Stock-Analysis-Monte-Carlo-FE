@@ -4,7 +4,7 @@ import ChartContainer from "@/components/ChartContainer/ChartContainer";
 
 const data = [
 	{
-		id: "Investment Data",
+		id: "Historical Data",
 		color: "hsl(264, 72%, 51%)",
 		data: [
 			{
@@ -79,9 +79,9 @@ export default function Home() {
 						<h1>Stock Analysis and Simulation with Monte Carlo</h1>
 						<p>a Project by Felix Fernando and Moch Nabil Farras</p>
 					</div>
-				</div>
-				<div className={styles.lineChart}>
-					<ChartContainer data={data}></ChartContainer>
+					<div className={styles.lineChart}>
+						<ChartContainer data={data}></ChartContainer>
+					</div>
 				</div>
 			</main>
 		</>
