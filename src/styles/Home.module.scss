@@ -1,5 +1,5 @@
 $bg-color: #21202E;
-$accent: #5ED8FF;
+$accent: #00C2FF;
 
 .container {
     padding: 0;
@@ -14,15 +14,91 @@ $accent: #5ED8FF;
     .content_container {
         width: 90vw;
         height: 90vh;
+        display: flex;
+        flex-direction: column;
+        row-gap: 18px;
+        .btn {
+            cursor: pointer;
+            padding: 12px 24px;
+            box-shadow: none;
+            font-weight: bold;
+            align-items: center;
+            display: flex;
+            border-radius: 8px;
+            p {
+                margin: 0;
+                padding: 0;
+            }
+            &.primary {
+                transition: .35s ease;
+                background-color: $accent;
+                &:hover {
+                    background-color: #00c3ff80;
+                }
+            }
+            &.secondary {
+                transition: .35s ease;
+                background-color: none;
+                border: 1px solid $accent;
+                p {
+                    color: $accent;
+                }
+                &:hover {
+                    background-color: #00c3ff80;
+                    p {
+                        color: white;
 
+                    }
+                }
+            }
+        }
         .title {
             p {
                 color: $accent;
             }
         }
-        .lineChart {
-            height: 50vh;
-            width: auto;
+        .section {
+            display: flex;
+            column-gap: 18px;
+        }
+        .configuration_container {
+            .configurations {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: none;
+                .subcontainer {
+                    p {
+                        color: $accent;
+                    }
+                }
+                .button_container {
+                    display: flex;
+                    column-gap: 18px;
+                }
+            }
+        }
+        
+        .chart_container {
+            background-color: #272436;
+            border: 1px solid #D4D4D4;
+            padding: 24px;
+            box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            width: fit-content;
+            height: fit-content;
+            .lineChart {
+                height: 50vh;
+                width: 65vw;
+            }
+        }
+        .simulation_list {
+            align-self: stretch;
+            background-color: #272436;
+            border: 1px solid #D4D4D4;
+            padding: 24px;
+            box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
         }
     }
 }
