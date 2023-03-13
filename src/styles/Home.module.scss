@@ -1,5 +1,7 @@
 $bg-color: #21202E;
 $accent: #00C2FF;
+$red: #FF5E5E;
+$green: #06A63C;
 
 .container {
     padding: 0;
@@ -62,20 +64,28 @@ $accent: #00C2FF;
             column-gap: 18px;
         }
         .configuration_container {
+            display: flex;
+            align-items: center;
             .configurations {
                 display: flex;
-                justify-content: space-between;
+                flex: 1;
                 align-items: center;
+                column-gap: 32px;
                 border: none;
                 .subcontainer {
                     p {
                         color: $accent;
                     }
+                    .title {
+                        margin-bottom: 4px;
+                    }
                 }
-                .button_container {
-                    display: flex;
-                    column-gap: 18px;
-                }
+            }
+            .button_container {
+                display: flex;
+                width: fit-content;
+                height: fit-content;
+                column-gap: 18px;
             }
         }
         
@@ -88,17 +98,128 @@ $accent: #00C2FF;
             width: fit-content;
             height: fit-content;
             .lineChart {
-                height: 50vh;
+                height: 53vh;
                 width: 65vw;
             }
         }
         .simulation_list {
             align-self: stretch;
+            height: calc(53vh + 20px);
+            width: 19vw;
             background-color: #272436;
             border: 1px solid #D4D4D4;
             padding: 24px;
             box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
+            scrollbar-width: 3px;
+
+            .sub_title {
+                margin-bottom: 18px; 
+                margin-top: 18px; 
+                &:first-child {
+                    margin-top: 0px;
+                }
+            }
+
+            .trading_sequence {
+                margin-top: 8px;
+                display: flex;
+                flex-wrap: wrap;
+                column-gap: 5px;
+                row-gap: 5px;
+                .sequence {
+                    border: 1px solid white;
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 4px;
+                    &.sell {
+                        border: 1px solid $red;
+                        color: $red;
+                    }
+                    &.buy { 
+                        border: 1px solid $green;
+                        color: $green;
+                    }
+                }
+            }
+            .simulation {
+                $margin-top: 18px;
+                overflow: auto;
+                height: calc(30vh - $margin-top);
+                margin-top: $margin-top;
+                
+                .simulation_card { 
+                    border-top: 0.25px solid white;
+                    border-bottom: 0.25px solid white;
+                    padding: 16px;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: #21202E;
+                    }
+                    h3 {
+                        color: $accent;
+                    }
+
+                    &:first-child {
+                        border-top: none;
+                    }
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                }
+                
+                /* width */
+                &::-webkit-scrollbar {
+                    border-radius: 5px;
+                    width: 5px;
+                }
+                
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    border-radius: 5px;
+                    background: #f1f1f1;
+                }
+                
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 5px;
+                    background: $accent;
+                }
+                
+                /* Handle on hover */
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #555;
+                }
+            }
+            .optimal_trading {
+                .sub_title {
+                    margin-top: 18px;
+                }
+                .trading_sequence {
+                    padding: 0 24px;
+
+                }
+            }
+        }
+    }
+
+    .custom_input {
+        background-color: transparent;
+        border: 1px solid white;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        outline: none;
+        box-sizing: border-box;
+        &:focus {
+            border: 1px solid $accent;
+        }
+
+        &[type=date]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
         }
     }
 }

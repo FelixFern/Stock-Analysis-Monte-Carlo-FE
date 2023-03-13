@@ -31,7 +31,7 @@ const ChartContainer = ({ data }: LineChartComponentProps) => {
 	return (
 		<ResponsiveLine
 			data={data}
-			margin={{ top: 30, right: 12, bottom: 40, left: 50 }}
+			margin={{ top: 10, right: 10, bottom: 10, left: 50 }}
 			xScale={{ type: "point" }}
 			yScale={{
 				type: "linear",
@@ -57,7 +57,8 @@ const ChartContainer = ({ data }: LineChartComponentProps) => {
 				},
 			}}
 			axisBottom={{
-				tickValues: ticks,
+				// tickValues: ticks,
+				tickValues: [],
 			}}
 			enableGridX={false}
 			enablePoints={false}
