@@ -1,0 +1,40 @@
+.popup_parent {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 4%;
+    color: white;
+    width: 24vw;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--blue);
+    padding: 12px 20px;
+    border: 2px solid var(--blue);
+    border-radius: 5px;
+    h2 {
+        font-size: 14px;
+    }
+}
+.err {
+    background-color: var(--red) !important;
+    border: 2px solid var(--red);
+}
+.pred {
+    background-color: var(--green) !important;
+    border: 2px solid var(--green);
+}
+.close_btn:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+.show {
+    transition: 0.5s;
+    top: 4%;
+    opacity: 1;
+}
+.hide {
+    transition: 0.5s;
+    top: -5%;
+    opacity: 0;
+}

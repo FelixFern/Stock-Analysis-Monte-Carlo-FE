@@ -4,6 +4,7 @@ import ChartContainer from "@/components/ChartContainer/ChartContainer";
 import { useEffect, useState } from "react";
 import { fetchStock, simulateTrade, simulation } from "@/utils/api";
 import moment from "moment";
+import Popup from "@/components/Alert/Popup";
 
 type PriceData = {
 	x: string;
@@ -11,9 +12,11 @@ type PriceData = {
 };
 
 export default function Home() {
+	const [popup, setPopup] = useState<any>({ state: false, type: "" });
+
 	const [stock, setStock] = useState<string>("BBCA.JK");
 	const [displayedData, setDisplayedData] = useState<any>();
-	const [startDate, setStartDate] = useState<any>("");
+	const [startDate, setStartDate] = useState<any>("2021-01-01");
 	const [numOfSimulation, setNumOfSimulation] = useState<number>(500);
 	const [simulationDays, setSimulationDays] = useState<number>(60);
 	const [simulationData, setSimulationData] = useState<any>();
@@ -52,6 +55,8 @@ export default function Home() {
 	});
 
 	const handleGenerateStock = () => {
+		setPopup({ state: true, type: "loading" });
+
 		fetchStock(stock, "Adj Close", startDate)
 			.then((data) => {
 				let price_data: PriceData[] = [];
@@ -70,13 +75,24 @@ export default function Home() {
 						data: [...price_data],
 					},
 				]);
+				setPopup({ state: true, type: "success" });
+				setTimeout(() => {
+					setPopup({ state: false, type: "success" });
+				}, 3000);
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => {
+				console.error(err);
+				setPopup({ state: true, type: "failed" });
+				setTimeout(() => {
+					setPopup({ state: false, type: "failed" });
+				}, 3000);
+			});
 	};
 
 	const handleGenerateSimulation = () => {
 		setSimulationData(null);
 		setTradingSimData(null);
+		setPopup({ state: true, type: "loading" });
 		simulation(
 			stock,
 			"Adj Close",
@@ -87,8 +103,18 @@ export default function Home() {
 			.then((data) => {
 				setSimulationData(data);
 				console.log(data);
+				setPopup({ state: true, type: "success" });
+				setTimeout(() => {
+					setPopup({ state: false, type: "success" });
+				}, 3000);
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => {
+				console.error(err);
+				setPopup({ state: true, type: "failed" });
+				setTimeout(() => {
+					setPopup({ state: false, type: "failed" });
+				}, 3000);
+			});
 	};
 
 	const diplaySimulation = (displayed_sim: number) => {
@@ -122,6 +148,8 @@ export default function Home() {
 
 	const handleSimulateTrade = () => {
 		setTradingSimData(() => null);
+		setPopup({ state: true, type: "loading" });
+
 		simulateTrade(
 			stock,
 			"Adj Close",
@@ -130,10 +158,21 @@ export default function Home() {
 			simulationDays,
 			simulationData.optimal_trading_sequence,
 			balance
-		).then((res) => {
-			setTradingSimData(() => res);
-			console.log(res);
-		});
+		)
+			.then((res) => {
+				setTradingSimData(() => res);
+				console.log(res);
+				setPopup({ state: true, type: "success" });
+				setTimeout(() => {
+					setPopup({ state: false, type: "success" });
+				}, 3000);
+			})
+			.catch((err) => {
+				setPopup({ state: true, type: "failed" });
+				setTimeout(() => {
+					setPopup({ state: false, type: "failed" });
+				}, 3000);
+			});
 	};
 
 	if (!displayedData) {
@@ -181,9 +220,9 @@ export default function Home() {
 									type="date"
 									name="date"
 									className={styles.custom_input}
+									value={startDate}
 									onChange={(e) => {
 										setStartDate(e.target.value);
-										console.log(e.target.value);
 									}}
 								/>
 							</div>
@@ -506,7 +545,10 @@ export default function Home() {
 									}}
 									role="button"
 								>
-									<p>Hide Trading Sequence</p>
+									<p>
+										{showTradingSeq ? "Show" : "Hide"}{" "}
+										Trading Sequence
+									</p>
 								</div>
 							</div>
 							<div className={styles.simulation}>
@@ -646,6 +688,7 @@ export default function Home() {
 					</div>
 				</div>
 			</main>
+			<Popup popup={popup} setPopup={setPopup}></Popup>
 		</>
 	);
 }
