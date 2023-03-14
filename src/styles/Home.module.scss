@@ -1,24 +1,68 @@
 $bg-color: #21202E;
 $accent: #00C2FF;
 $red: #FF5E5E;
-$green: #06A63C;
+$green: #0de054;
+
+.red {
+    color: $red;
+}
+.green { 
+    color: $green;
+}
+.accent {
+    color: $accent;
+}
+.grey { 
+    color: rgb(124, 124, 124);
+}
 
 .container {
     padding: 0;
     margin: 0;
     width: 100vw;
-    height: 100vh;
-    background-color: $bg-color;
+    margin-top: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     .content_container {
         width: 90vw;
-        height: 90vh;
+        height: fit-content;
         display: flex;
         flex-direction: column;
         row-gap: 18px;
+        .trading_sequence {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 5px;
+            row-gap: 5px;
+        }
+        .sequence {
+            border: 1px solid white;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            &.sell {
+                border: 1px solid $red;
+                color: $red;
+            }
+            &.buy { 
+                border: 1px solid $green;
+                color: $green;
+            }
+        }
+        .links {
+            transition: .25s ease;
+            color: $accent;
+            cursor: pointer;
+            &:hover {
+                opacity: .5;
+            }
+        }
         .btn {
             cursor: pointer;
             padding: 12px 24px;
@@ -27,6 +71,7 @@ $green: #06A63C;
             align-items: center;
             display: flex;
             border-radius: 8px;
+            text-align: center;
             p {
                 margin: 0;
                 padding: 0;
@@ -62,6 +107,13 @@ $green: #06A63C;
         .section {
             display: flex;
             column-gap: 18px;
+            .subsection {
+                width: fit-content;
+                overflow: visible;
+                display: flex;
+                flex-direction: column;
+                row-gap: 18px;
+            }
         }
         .configuration_container {
             display: flex;
@@ -80,12 +132,11 @@ $green: #06A63C;
                         margin-bottom: 4px;
                     }
                 }
-            }
-            .button_container {
-                display: flex;
-                width: fit-content;
-                height: fit-content;
-                column-gap: 18px;
+                .divider {
+                    height: 32px;
+                    width: 1px;
+                    background-color: #d4d4d4;
+                }
             }
         }
         
@@ -98,21 +149,110 @@ $green: #06A63C;
             width: fit-content;
             height: fit-content;
             .lineChart {
-                height: 53vh;
-                width: 65vw;
+                height: 40vh;
+                width: 60vw;
+                div {
+                    overflow-y: hidden;
+                }
+            }
+        }
+        .t_simulation_stats {
+            display: flex;
+            column-gap: 18px;
+            width: calc(60vw + 48px);
+            flex-grow: 1;
+            .simulate_trading {
+                display: flex;
+                height: fit-content;
+                align-items: center;
+                column-gap: 8px;
+                justify-content: space-between;
+                margin-bottom: 18px;
+                .title {
+                    color: $accent;
+                    margin-bottom: 4px;
+                }
+            }
+            .subcontainer {
+                flex: 1;
+                background-color: #272436;
+                border: 1px solid #D4D4D4;
+                padding: 24px;
+                box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                flex-grow: 1;
+            }
+            .sub_title {
+                margin-bottom: 7px;
+            }
+            .optimal_trading {
+                height: 100%;
+                .trading_sequence {
+                    height: 100px;
+                    overflow: auto;
+                     /* width */
+                    &::-webkit-scrollbar {
+                        border-radius: 5px;
+                        width: 5px;
+                    }
+                    
+                    /* Track */
+                    &::-webkit-scrollbar-track {
+                        border-radius: 5px;
+                        background: #f1f1f1;
+                    }
+                    
+                    /* Handle */
+                    &::-webkit-scrollbar-thumb {
+                        border-radius: 5px;
+                        background: $accent;
+                    }
+                    
+                    /* Handle on hover */
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: #555;
+                    }
+                }
+                .note_title {
+                    margin-top: 18px;
+                    margin-bottom: 8px;
+                }
+                .sequence_note {
+                    display: flex;
+                    column-gap: 16px;
+                    div {
+                        display: flex;
+                        column-gap: 8px;
+                    }
+                }
             }
         }
         .simulation_list {
             align-self: stretch;
-            height: calc(53vh + 20px);
-            width: 19vw;
+            height: 80vh;
+            flex-grow: 1;
             background-color: #272436;
             border: 1px solid #D4D4D4;
             padding: 24px;
             box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
             scrollbar-width: 3px;
+            overflow: hidden;
 
+            .header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .btn {
+                    padding: 4px 12px;
+                    p {
+                        font-size: 12px;
+                    }
+                }
+                .sub_title {
+                    margin: 0;
+                }
+            }
             .sub_title {
                 margin-bottom: 18px; 
                 margin-top: 18px; 
@@ -121,34 +261,10 @@ $green: #06A63C;
                 }
             }
 
-            .trading_sequence {
-                margin-top: 8px;
-                display: flex;
-                flex-wrap: wrap;
-                column-gap: 5px;
-                row-gap: 5px;
-                .sequence {
-                    border: 1px solid white;
-                    width: 20px;
-                    height: 20px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    border-radius: 4px;
-                    &.sell {
-                        border: 1px solid $red;
-                        color: $red;
-                    }
-                    &.buy { 
-                        border: 1px solid $green;
-                        color: $green;
-                    }
-                }
-            }
             .simulation {
                 $margin-top: 18px;
                 overflow: auto;
-                height: calc(30vh - $margin-top);
+                height: calc(100% - 36px);
                 margin-top: $margin-top;
                 
                 .simulation_card { 
@@ -161,6 +277,15 @@ $green: #06A63C;
                     }
                     h3 {
                         color: $accent;
+                    }
+                    h4 {
+                        margin-top: 12px;
+                        padding-bottom: 8px;
+                        margin-bottom: 4px;
+                        border-bottom: 1px solid white;
+                    }
+                    span {
+                    font-weight: bold;
                     }
 
                     &:first-child {
@@ -194,15 +319,7 @@ $green: #06A63C;
                     background: #555;
                 }
             }
-            .optimal_trading {
-                .sub_title {
-                    margin-top: 18px;
-                }
-                .trading_sequence {
-                    padding: 0 24px;
-
-                }
-            }
+            
         }
     }
 

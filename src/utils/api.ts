@@ -31,3 +31,24 @@ export const simulation = (
 	};
 	return axios.post(`${API_URL}/simulate`, payload).then((res) => res.data);
 };
+
+export const simulateTrade = (
+	stock: string,
+	criteria: string,
+	start_date: string | never,
+	n_sim: number,
+	days: number,
+	optimal_trading_sequence = Array<any>,
+	money: number
+) => {
+	const payload = {
+		stock: stock,
+		criteria: criteria,
+		start_date: start_date ?? "",
+		n_sim: n_sim,
+		days: days,
+		optimal_trading_sequence: optimal_trading_sequence,
+		money: money,
+	};
+	return axios.post(`${API_URL}/trade`, payload).then((res) => res.data);
+};

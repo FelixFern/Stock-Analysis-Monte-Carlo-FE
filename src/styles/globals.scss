@@ -1,9 +1,38 @@
+$bg-color: #21202E;
+$accent: #00C2FF;
+$red: #FF5E5E;
+$green: #0de054;
+
 * {
     margin: 0;
     padding: 0;
     color: white;
     font-family: inter;
-    overflow: hidden;
+    overflow-x: hidden;
+}
+body {
+    background-color: $bg-color;
+    &::-webkit-scrollbar {
+        border-radius: 5px;
+        width: 2px;
+    }
+    
+    /* Track */
+    &::-webkit-scrollbar-track {
+        border-radius: 2px;
+        background: #f1f1f1;
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        background: $accent;
+    }
+    
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 }
 
 h1 {
