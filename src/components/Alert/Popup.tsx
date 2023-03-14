@@ -65,7 +65,11 @@ function Popup({ popup, setPopup }: any) {
 			</div>
 		);
 	} else {
-		return <></>;
+		return (
+			<>
+				<></>
+			</>
+		);
 	}
 }
 

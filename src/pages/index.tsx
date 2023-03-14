@@ -176,7 +176,11 @@ export default function Home() {
 	};
 
 	if (!displayedData) {
-		return <>Loading...</>;
+		return (
+			<>
+				<>Loading...</>
+			</>
+		);
 	}
 	return (
 		<>
