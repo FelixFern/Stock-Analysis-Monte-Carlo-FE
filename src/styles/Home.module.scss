@@ -16,7 +16,26 @@ $green: #0de054;
     color: rgb(124, 124, 124);
 }
 
+.disclaimer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    @media (min-width: 1440px) {
+        display: none;
+    }
+    p {
+        margin-top: 32px;
+    }
+}
+
 .container {
+    @media (max-width: 1440px) {
+        display: none;
+    }
     padding: 0;
     margin: 0;
     width: 100vw;

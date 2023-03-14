@@ -153,6 +153,16 @@ export default function Home() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+			<div className={styles.disclaimer}>
+				<h1>
+					Stock Analysis and Simulation <br></br>
+				</h1>
+				<h3>by Felix Fernando and Moch Nabil Farras</h3>
+				<p>
+					Please open this page on a device with a{" "}
+					<span className={styles.accent}>larger screen</span>
+				</p>
+			</div>
 			<main className={styles.container}>
 				<div className={styles.content_container}>
 					<div className={styles.title}>
