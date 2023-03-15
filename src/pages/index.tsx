@@ -217,7 +217,7 @@ export default function Home() {
 			<main className={styles.container}>
 				<div className={styles.content_container}>
 					<div className={styles.title}>
-						<h1>Stock Analysis and Simulation with Monte Carlo</h1>
+						<h1>Stock Analysis and Simulation</h1>
 						<p>a Project by Felix Fernando and Moch Nabil Farras</p>
 					</div>
 					<div className={styles.configuration_container}>
