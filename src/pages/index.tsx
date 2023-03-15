@@ -23,6 +23,7 @@ export default function Home() {
 	const [balance, setBalance] = useState<number>(0);
 	const [showTradingSeq, setShowTradingSeq] = useState<boolean>(false);
 	const [tradingSimData, setTradingSimData] = useState<any>();
+	const [confidenceLevel, setConfidenceLevel] = useState<number>(95);
 
 	const [selectedSim, setSelectedSim] = useState<number>(0);
 	const [isDisplayingSim, setIsDisplayingSim] = useState<boolean>(false);
@@ -149,30 +150,37 @@ export default function Home() {
 	const handleSimulateTrade = () => {
 		setTradingSimData(() => null);
 		setPopup({ state: true, type: "loading" });
-
-		simulateTrade(
-			stock,
-			"Adj Close",
-			startDate,
-			numOfSimulation,
-			simulationDays,
-			simulationData.optimal_trading_sequence,
-			balance
-		)
-			.then((res) => {
-				setTradingSimData(() => res);
-				console.log(res);
-				setPopup({ state: true, type: "success" });
-				setTimeout(() => {
-					setPopup({ state: false, type: "success" });
-				}, 3000);
-			})
-			.catch((err) => {
-				setPopup({ state: true, type: "failed" });
-				setTimeout(() => {
-					setPopup({ state: false, type: "failed" });
-				}, 3000);
-			});
+		if (confidenceLevel <= 100 && confidenceLevel >= 0) {
+			simulateTrade(
+				stock,
+				"Adj Close",
+				startDate,
+				numOfSimulation,
+				simulationDays,
+				simulationData.optimal_trading_sequence,
+				balance,
+				confidenceLevel
+			)
+				.then((res) => {
+					setTradingSimData(() => res);
+					console.log(res);
+					setPopup({ state: true, type: "success" });
+					setTimeout(() => {
+						setPopup({ state: false, type: "success" });
+					}, 3000);
+				})
+				.catch((err) => {
+					setPopup({ state: true, type: "failed" });
+					setTimeout(() => {
+						setPopup({ state: false, type: "failed" });
+					}, 3000);
+				});
+		} else {
+			setPopup({ state: true, type: "failed" });
+			setTimeout(() => {
+				setPopup({ state: false, type: "failed" });
+			}, 3000);
+		}
 	};
 
 	if (!displayedData) {
@@ -216,7 +224,13 @@ export default function Home() {
 						<div className={styles.configurations}>
 							<div className={styles.subcontainer}>
 								<p className={styles.title}>Stock</p>
-								<h2>BBCA.JK</h2>
+								<input
+									type="text"
+									name="stock"
+									className={styles.custom_input}
+									onChange={(e) => setStock(e.target.value)}
+									value={stock}
+								/>
 							</div>
 							<div className={styles.subcontainer}>
 								<p className={styles.title}>Start Date</p>
@@ -306,7 +320,7 @@ export default function Home() {
 							<div className={styles.t_simulation_stats}>
 								<div className={styles.subcontainer}>
 									<h3 className={styles.sub_title}>
-										Simulation Trading
+										Trading Simulation
 									</h3>
 									<div className={styles.simulate_trading}>
 										<div className={styles.input_container}>
@@ -327,18 +341,36 @@ export default function Home() {
 												value={balance}
 											/>
 										</div>
-										<div
-											className={[
-												styles.btn,
-												styles.secondary,
-											].join(" ")}
-											onClick={() => {
-												handleSimulateTrade();
-											}}
-											role="button"
-										>
-											<p>Simulate Trading</p>
+										<div className={styles.input_container}>
+											<p className={styles.title}>
+												Confidence Level (%) :{" "}
+											</p>
+											<input
+												type="number"
+												name="balance"
+												className={styles.custom_input}
+												onChange={(e) =>
+													setConfidenceLevel(
+														parseFloat(
+															e.target.value
+														)
+													)
+												}
+												value={confidenceLevel}
+											/>
 										</div>
+									</div>
+									<div
+										className={[
+											styles.btn,
+											styles.secondary,
+										].join(" ")}
+										onClick={() => {
+											handleSimulateTrade();
+										}}
+										role="button"
+									>
+										<p>Simulate Trading</p>
 									</div>
 									<h3 className={styles.sub_title}>
 										Simulation Stats
@@ -381,16 +413,14 @@ export default function Home() {
 															tradingSimData
 																.performance
 																.maximum.profit
-																.simulation - 1
+																.simulation
 														);
 													}}
 												>
 													(Simulation -{" "}
-													{
-														tradingSimData
-															.performance.maximum
-															.profit.simulation
-													}
+													{tradingSimData.performance
+														.maximum.profit
+														.simulation + 1}
 													)
 												</span>
 												:{" "}
@@ -416,17 +446,15 @@ export default function Home() {
 														diplaySimulation(
 															tradingSimData
 																.performance
-																.loss.profit
-																.simulation - 1
+																.maximum.loss
+																.simulation
 														);
 													}}
 												>
 													(Simulation -{" "}
-													{
-														tradingSimData
-															.performance.maximum
-															.loss.simulation
-													}
+													{tradingSimData.performance
+														.maximum.loss
+														.simulation + 1}
 													)
 												</span>
 												:{" "}
@@ -441,6 +469,24 @@ export default function Home() {
 														  ).toFixed(2)
 														: "-"}
 													%
+												</span>
+											</p>
+											<p>
+												Value at Risk:{" "}
+												<span
+													className={
+														tradingSimData
+															.performance.maximum
+															.var >= 0
+															? styles.green
+															: styles.red
+													}
+												>
+													{curr_formatter.format(
+														tradingSimData
+															.performance.maximum
+															.var
+													)}
 												</span>
 											</p>
 										</div>

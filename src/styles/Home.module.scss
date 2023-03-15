@@ -186,12 +186,16 @@ $green: #0de054;
                 height: fit-content;
                 align-items: center;
                 column-gap: 8px;
-                justify-content: space-between;
                 margin-bottom: 18px;
+                
                 .title {
                     color: $accent;
                     margin-bottom: 4px;
                 }
+            }
+            .btn {
+                width: fit-content !important;
+                margin-bottom: 12px;
             }
             .subcontainer {
                 flex: 1;

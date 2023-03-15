@@ -39,7 +39,8 @@ export const simulateTrade = (
 	n_sim: number,
 	days: number,
 	optimal_trading_sequence = Array<any>,
-	money: number
+	money: number,
+	conf_level: number
 ) => {
 	const payload = {
 		stock: stock,
@@ -49,6 +50,7 @@ export const simulateTrade = (
 		days: days,
 		optimal_trading_sequence: optimal_trading_sequence,
 		money: money,
+		conf_level: conf_level,
 	};
 	return axios.post(`${API_URL}/trade`, payload).then((res) => res.data);
 };
